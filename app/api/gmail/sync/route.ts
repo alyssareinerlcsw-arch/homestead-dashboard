@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { sql } from "@/lib/db";
 
 const CATEGORY_KEYS = ["lyra", "jfs", "caregiving", "kids", "home", "personal", "sidequests", "research", "finances"];
@@ -72,8 +72,8 @@ export async function POST() {
   if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     return NextResponse.json({ error: "Gmail not configured" }, { status: 503 });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ error: "ANTHROPIC_API_KEY not set" }, { status: 503 });
+  if (!process.env.GEMINI_API_KEY) {
+    return NextResponse.json({ error: "GEMINI_API_KEY not set" }, { status: 503 });
   }
 
   const auth = await getAuthClient();
@@ -131,19 +131,15 @@ export async function POST() {
     })
   );
 
-  // Send to Claude to extract tasks
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  // Send to Gemini to extract tasks
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const emailSummary = emailContents
     .map((e, i) => `EMAIL ${i + 1}:\nFrom: ${e.from}\nSubject: ${e.subject}\nBody: ${e.body}`)
     .join("\n\n---\n\n");
 
-  const message = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 1024,
-    messages: [{
-      role: "user",
-      content: `You are a personal assistant scanning emails to extract actionable tasks.
+  const result = await model.generateContent(`You are a personal assistant scanning emails to extract actionable tasks.
 
 Available life-area categories: lyra (job at Lyra), jfs (job at JFS), caregiving (dad with dementia), kids, home, personal, sidequests, research, finances.
 
@@ -163,9 +159,7 @@ ${emailSummary}
 
 Email IDs in order: ${emailContents.map((e) => e.id).join(", ")}
 
-Return ONLY the JSON array, no explanation.`,
-    }],
-  });
+Return ONLY the JSON array, no explanation.`);
 
   let extractedTasks: Array<{
     title: string; description?: string; category: string;
@@ -173,7 +167,7 @@ Return ONLY the JSON array, no explanation.`,
   }> = [];
 
   try {
-    const raw = (message.content[0] as { text: string }).text.trim();
+    const raw = result.response.text().trim();
     const jsonMatch = raw.match(/\[[\s\S]*\]/);
     if (jsonMatch) extractedTasks = JSON.parse(jsonMatch[0]);
   } catch {
