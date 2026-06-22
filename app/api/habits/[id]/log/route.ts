@@ -27,5 +27,5 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
     ORDER BY logged_date DESC
     LIMIT 90
   `;
-  return NextResponse.json(logs.map((l: { logged_date: string }) => l.logged_date));
+  return NextResponse.json(logs.map((l) => (l as { logged_date: string }).logged_date));
 }
