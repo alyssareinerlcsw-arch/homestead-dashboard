@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
   const [newStats] = await sql`SELECT * FROM user_stats WHERE id = 1`;
   const existingAchievements = await sql`SELECT key FROM achievements`;
-  const existingKeys = new Set(existingAchievements.map((a: { key: string }) => a.key));
+  const existingKeys = new Set(existingAchievements.map((a) => (a as { key: string }).key));
   const earned: string[] = [];
 
   async function awardAchievement(key: string) {

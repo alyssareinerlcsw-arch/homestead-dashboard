@@ -17,14 +17,17 @@ export async function GET() {
     SELECT habit_id FROM habit_logs WHERE logged_date = ${today}
   `;
 
-  const todaySet = new Set(todayLogs.map((l: { habit_id: number }) => l.habit_id));
-  const streakMap = new Map(logs.map((l: { habit_id: number; streak: number }) => [l.habit_id, l.streak]));
+  const todaySet = new Set(todayLogs.map((l) => (l as { habit_id: number }).habit_id));
+  const streakMap = new Map(logs.map((l) => [(l as { habit_id: number; streak: number }).habit_id, (l as { habit_id: number; streak: number }).streak]));
 
-  const result = habits.map((h: { id: number }) => ({
-    ...h,
-    completed_today: todaySet.has(h.id),
-    recent_count: streakMap.get(h.id) || 0,
-  }));
+  const result = habits.map((h) => {
+    const habit = h as { id: number };
+    return {
+      ...h,
+      completed_today: todaySet.has(habit.id),
+      recent_count: streakMap.get(habit.id) || 0,
+    };
+  });
 
   return NextResponse.json(result);
 }
