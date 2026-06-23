@@ -133,7 +133,7 @@ export async function POST() {
 
   // Send to Gemini to extract tasks
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   const emailSummary = emailContents
     .map((e, i) => `EMAIL ${i + 1}:\nFrom: ${e.from}\nSubject: ${e.subject}\nBody: ${e.body}`)

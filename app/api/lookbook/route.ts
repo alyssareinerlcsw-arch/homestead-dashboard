@@ -48,7 +48,7 @@ export async function GET() {
   const lunarIntensity = cycleDay < 14.77 ? "building" : "releasing";
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   const prompt = `You are Alyssa's personal astrologer and stylist. Create her daily lookbook.
 
