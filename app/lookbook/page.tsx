@@ -240,11 +240,11 @@ export default function LookbookPage() {
             </div>
             <div>
               <p style={{ fontSize: 8, color: C.muted, letterSpacing: "0.12em" }}>VENUS · WARDROBE</p>
-              <p style={{ fontSize: 12, color: C.rust, fontFamily: "Georgia, serif" }}>♏ {data.chart.venus}</p>
+              <p style={{ fontSize: 12, color: C.rust, fontFamily: "Georgia, serif" }}>♐ {data.chart.venus}</p>
             </div>
             <div>
               <p style={{ fontSize: 8, color: C.muted, letterSpacing: "0.12em" }}>MARS · MAKEUP</p>
-              <p style={{ fontSize: 12, color: C.burgundy, fontFamily: "Georgia, serif" }}>♎ {data.chart.mars}</p>
+              <p style={{ fontSize: 12, color: C.burgundy, fontFamily: "Georgia, serif" }}>♊ {data.chart.mars}</p>
             </div>
             <div>
               <p style={{ fontSize: 8, color: C.muted, letterSpacing: "0.12em" }}>TODAY'S ENERGY</p>
@@ -351,7 +351,7 @@ export default function LookbookPage() {
       {/* Footer */}
       <div style={{ marginTop: 28, textAlign: "center" }}>
         <p style={{ fontSize: 9, color: C.border, letterSpacing: "0.15em", fontFamily: "monospace" }}>
-          ✦ · TRUE AUTUMN · SCORPIO VENUS · LIBRA MARS · ✦
+          ✦ · TRUE AUTUMN · SAGITTARIUS VENUS · GEMINI MARS · ✦
         </p>
       </div>
     </div>

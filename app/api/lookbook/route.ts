@@ -4,8 +4,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // Alyssa's natal chart — Oct 17, 1989, 8:12 PM, Ridgewood NJ
 const CHART = {
   sun: "Libra",
-  venus: "Scorpio",   // wardrobe ruler
-  mars: "Libra",      // makeup ruler
+  venus: "Sagittarius", // wardrobe ruler
+  mars: "Gemini",       // makeup ruler
   palette: "True Autumn",
   hair: "auburn/red",
 };
