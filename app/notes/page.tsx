@@ -20,15 +20,18 @@ const STICKER_COLORS = [
 
 const MASCOTS = ["🐱", "👽", "🦄", "🐬", "🌈", "⭐", "🎀", "🦋", "🐾", "💫"];
 
-function FloatingMascot({ emoji, style }: { emoji: string; style: React.CSSProperties }) {
+function Sticker({ src, style }: { src: string; style: React.CSSProperties }) {
   return (
-    <span style={{
-      position: "absolute", fontSize: 22, pointerEvents: "none",
-      animation: "lfloat 3s ease-in-out infinite",
-      ...style,
-    }}>
-      {emoji}
-    </span>
+    <img
+      src={src}
+      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+      style={{
+        position: "absolute", pointerEvents: "none",
+        animation: "lfloat 3s ease-in-out infinite",
+        objectFit: "contain", filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))",
+        ...style,
+      }}
+    />
   );
 }
 
@@ -119,22 +122,19 @@ export default function NotesPage() {
         }
       `}</style>
 
-      {/* Animated rainbow background */}
+      {/* Static rainbow background */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 0,
-        background: "linear-gradient(-45deg, #FF1493, #8B00FF, #00CED1, #FF6347, #39FF14, #FF00FF, #FFD700, #4169E1)",
-        backgroundSize: "400% 400%",
-        animation: "rainbow-bg 8s ease infinite",
+        background: "linear-gradient(135deg, #FF1493 0%, #C71585 12%, #8B00FF 25%, #4169E1 40%, #00CED1 55%, #32CD32 68%, #FFD700 80%, #FF6347 92%, #FF1493 100%)",
       }} />
 
-      {/* Sparkle overlay */}
+      {/* Sticker overlay — add images to /public/lisa-frank/ */}
       <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }}>
-        <FloatingMascot emoji="⭐" style={{ top: "8%", left: "3%", animationDelay: "0s" }} />
-        <FloatingMascot emoji="💫" style={{ top: "15%", right: "4%", animationDelay: "0.5s" }} />
-        <FloatingMascot emoji="🌈" style={{ top: "5%", left: "45%", animationDelay: "1s", fontSize: 28 }} />
-        <FloatingMascot emoji="⭐" style={{ bottom: "12%", left: "6%", animationDelay: "1.5s" }} />
-        <FloatingMascot emoji="💫" style={{ bottom: "8%", right: "3%", animationDelay: "2s" }} />
-        <FloatingMascot emoji="✨" style={{ top: "40%", right: "1%", animationDelay: "0.8s" }} />
+        <Sticker src="/lisa-frank/sticker1.png" style={{ top: "4%",  left: "1%",  width: 110, animationDelay: "0s" }} />
+        <Sticker src="/lisa-frank/sticker2.png" style={{ top: "2%",  right: "1%", width: 120, animationDelay: "0.6s" }} />
+        <Sticker src="/lisa-frank/sticker3.png" style={{ bottom: "4%", left: "1%",  width: 100, animationDelay: "1.2s" }} />
+        <Sticker src="/lisa-frank/sticker4.png" style={{ bottom: "3%", right: "1%", width: 110, animationDelay: "0.9s" }} />
+        <Sticker src="/lisa-frank/sticker5.png" style={{ top: "42%", right: "0%", width: 90,  animationDelay: "1.5s" }} />
       </div>
 
       {/* Content */}
@@ -180,9 +180,8 @@ export default function NotesPage() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: 24, animation: "lfloat 2s ease-in-out infinite", animationDelay: "0.3s" }}>👽</span>
-              <span style={{ fontSize: 24, animation: "lfloat 2s ease-in-out infinite", animationDelay: "0.6s" }}>🦄</span>
-              <span style={{ fontSize: 24, animation: "lfloat 2s ease-in-out infinite", animationDelay: "0.9s" }}>🐬</span>
+              <img src="/lisa-frank/sticker6.png" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} style={{ width: 48, height: 48, objectFit: "contain", animation: "lfloat 2s ease-in-out infinite", animationDelay: "0.3s" }} />
+              <img src="/lisa-frank/sticker7.png" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} style={{ width: 48, height: 48, objectFit: "contain", animation: "lfloat 2s ease-in-out infinite", animationDelay: "0.6s" }} />
               <button onClick={createNote} className="lisa-btn" style={{
                 marginLeft: 8,
                 background: "linear-gradient(135deg, #FF1493, #8B00FF)",
