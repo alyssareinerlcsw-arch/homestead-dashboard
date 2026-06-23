@@ -6,23 +6,23 @@ export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
   const error = req.nextUrl.searchParams.get("error");
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
   if (error || !code) {
-    return NextResponse.redirect(
-      new URL(`/tasks?gmail=error&reason=${error || "no_code"}`, req.url)
-    );
+    return NextResponse.redirect(`${baseUrl}/tasks?gmail=error&reason=${error || "no_code"}`);
   }
 
   const auth = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/gmail/callback`
+    `${baseUrl}/api/gmail/callback`
   );
 
   try {
     const { tokens } = await auth.getToken(code);
 
     if (!tokens.access_token || !tokens.refresh_token) {
-      return NextResponse.redirect(new URL("/tasks?gmail=error&reason=no_tokens", req.url));
+      return NextResponse.redirect(`${baseUrl}/tasks?gmail=error&reason=no_tokens`);
     }
 
     await sql`
@@ -35,9 +35,9 @@ export async function GET(req: NextRequest) {
         updated_at = NOW()
     `;
 
-    return NextResponse.redirect(new URL("/tasks?gmail=connected", req.url));
+    return NextResponse.redirect(`${baseUrl}/tasks?gmail=connected`);
   } catch (err) {
     console.error("Gmail OAuth error:", err);
-    return NextResponse.redirect(new URL("/tasks?gmail=error&reason=token_exchange", req.url));
+    return NextResponse.redirect(`${baseUrl}/tasks?gmail=error&reason=token_exchange`);
   }
 }
