@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CheckSquare, RefreshCw, FileText, Target, Dumbbell, Menu, X } from "lucide-react";
+import { LayoutDashboard, CheckSquare, RefreshCw, FileText, Target, Dumbbell, Sparkles, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useXP } from "@/contexts/xp-context";
 
@@ -12,7 +12,8 @@ const NAV_ITEMS = [
   { href: "/habits", label: "Habits",    icon: RefreshCw,       xpNote: "+5 XP" },
   { href: "/notes",  label: "Notes",     icon: FileText,        xpNote: "+3 XP" },
   { href: "/goals",  label: "Goals",     icon: Target,          xpNote: "+5 XP" },
-  { href: "/gym",    label: "Gym",       icon: Dumbbell,        xpNote: "+20 XP" },
+  { href: "/gym",      label: "Gym",      icon: Dumbbell,  xpNote: "+20 XP" },
+  { href: "/lookbook", label: "Lookbook", icon: Sparkles,  xpNote: "" },
 ];
 
 const SIDEBAR_BG   = "linear-gradient(175deg, #EDD5C8 0%, #E4C4B4 45%, #D8B8A8 100%)";
