@@ -68,19 +68,39 @@ export async function POST(req: NextRequest) {
   }
 
   const s = newStats;
-  if (s.tasks_completed >= 1) await awardAchievement("first_task");
-  if (s.workouts_logged >= 1) await awardAchievement("first_workout");
-  if (s.notes_created >= 1) await awardAchievement("first_note");
-  if (s.goals_updated >= 1) await awardAchievement("first_goal");
+
+  // Core milestones
+  if (s.tasks_completed >= 1)  await awardAchievement("first_task");
+  if (s.workouts_logged >= 1)  await awardAchievement("first_workout");
+  if (s.notes_created >= 1)    await awardAchievement("first_note");
+  if (s.goals_updated >= 1)    await awardAchievement("first_goal");
   if (s.tasks_completed >= 10) await awardAchievement("tasks_10");
-  if (s.workouts_logged >= 5) await awardAchievement("workouts_5");
-  if (s.streak_days >= 3) await awardAchievement("streak_3");
-  if (s.streak_days >= 7) await awardAchievement("streak_7");
-  if (s.streak_days >= 30) await awardAchievement("streak_30");
-  if (newTotalXP >= 100) await awardAchievement("xp_100");
-  if (newTotalXP >= 500) await awardAchievement("xp_500");
-  if (newLevel >= 5) await awardAchievement("level_5");
-  if (newLevel >= 10) await awardAchievement("level_10");
+  if (s.workouts_logged >= 5)  await awardAchievement("workouts_5");
+  if (s.streak_days >= 3)      await awardAchievement("streak_3");
+  if (s.streak_days >= 7)      await awardAchievement("streak_7");
+  if (s.streak_days >= 30)     await awardAchievement("streak_30");
+  if (newTotalXP >= 100)       await awardAchievement("xp_100");
+  if (newTotalXP >= 500)       await awardAchievement("xp_500");
+  if (newLevel >= 5)           await awardAchievement("level_5");
+  if (newLevel >= 10)          await awardAchievement("level_10");
+
+  // Snarky unlocks
+  if (s.tasks_completed >= 25)   await awardAchievement("tasks_25");
+  if (s.tasks_completed >= 50)   await awardAchievement("tasks_50");
+  if (s.tasks_completed >= 100)  await awardAchievement("tasks_100");
+  if (s.workouts_logged >= 10)   await awardAchievement("workouts_10");
+  if (s.workouts_logged >= 25)   await awardAchievement("workouts_25");
+  if (s.workouts_logged >= 50)   await awardAchievement("workouts_50");
+  if (s.habits_logged >= 30)     await awardAchievement("habits_30");
+  if (s.habits_logged >= 100)    await awardAchievement("habits_100");
+  if (s.notes_created >= 5)      await awardAchievement("notes_5");
+  if (s.notes_created >= 20)     await awardAchievement("notes_20");
+  if (s.streak_days >= 14)       await awardAchievement("streak_14");
+  if (s.streak_days >= 21)       await awardAchievement("streak_21");
+  if (newTotalXP >= 1000)        await awardAchievement("xp_1000");
+  if (newTotalXP >= 2500)        await awardAchievement("xp_2500");
+  if (newLevel >= 3)             await awardAchievement("level_3");
+  if (newLevel >= 7)             await awardAchievement("level_7");
 
   if (questKey) {
     await sql`
