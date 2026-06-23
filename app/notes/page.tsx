@@ -337,7 +337,7 @@ export default function NotesPage() {
                     style={{
                       width: "100%", border: "none", outline: "none",
                       fontSize: 20, fontWeight: 900,
-                      background: "transparent", position: "relative", zIndex: 1,
+                      position: "relative", zIndex: 1,
                       marginBottom: 16,
                       background: "linear-gradient(90deg, #FF1493, #8B00FF, #00CED1)",
                       WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
