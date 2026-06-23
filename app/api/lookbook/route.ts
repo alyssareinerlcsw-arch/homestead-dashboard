@@ -124,6 +124,6 @@ Return ONLY valid JSON — no explanation:
     });
   } catch (err) {
     console.error("Lookbook generation error:", err);
-    return NextResponse.json({ error: "Failed to generate lookbook" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to generate lookbook", detail: String(err) }, { status: 500 });
   }
 }
